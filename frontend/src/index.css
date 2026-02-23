@@ -1,0 +1,609 @@
+@import 'boxicons/css/boxicons.min.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-gray-50 text-gray-900 antialiased;
+}
+
+/* Темная тема */
+[data-theme="dark"] body {
+  @apply bg-gray-900 text-gray-100;
+}
+
+[data-theme="dark"] .card {
+  @apply bg-gray-800 border-gray-700;
+}
+
+[data-theme="dark"] .card-header {
+  @apply bg-gray-700 border-gray-600;
+}
+
+[data-theme="dark"] .input-field {
+  @apply bg-gray-700 border-gray-600 text-gray-100 placeholder-gray-400;
+}
+
+[data-theme="dark"] .table-container {
+  @apply bg-gray-800 border-gray-700;
+}
+
+[data-theme="dark"] .table thead {
+  @apply bg-gray-700;
+}
+
+[data-theme="dark"] .table th {
+  @apply text-gray-300;
+}
+
+[data-theme="dark"] .table td {
+  @apply text-gray-200;
+}
+
+[data-theme="dark"] .table tbody tr {
+  @apply border-gray-700;
+}
+
+[data-theme="dark"] .table tbody tr:hover {
+  @apply bg-gray-700;
+}
+
+[data-theme="dark"] .modal-content {
+  @apply bg-gray-800;
+}
+
+[data-theme="dark"] .modal-header {
+  @apply bg-gray-800 border-gray-700;
+}
+
+[data-theme="dark"] .modal-footer {
+  @apply bg-gray-800 border-gray-700;
+}
+
+[data-theme="dark"] .sidebar {
+  @apply from-gray-900 to-gray-800;
+}
+
+[data-theme="dark"] .navbar {
+  @apply bg-gray-800 border-gray-700;
+}
+
+[data-theme="dark"] .notification-panel {
+  @apply bg-gray-800 border-gray-700;
+}
+
+[data-theme="dark"] .notification-item {
+  @apply border-gray-700;
+}
+
+[data-theme="dark"] .notification-item:hover {
+  @apply bg-gray-700;
+}
+
+[data-theme="dark"] .profile-menu {
+  @apply bg-gray-800 border-gray-700;
+}
+
+[data-theme="dark"] .profile-menu-item {
+  @apply text-gray-200 hover:bg-gray-700;
+}
+
+[data-theme="dark"] .profile-menu-divider {
+  @apply border-gray-700;
+}
+
+[data-theme="dark"] .theme-preview.light {
+  @apply bg-gray-200 text-gray-800;
+}
+
+[data-theme="dark"] .theme-preview.dark {
+  @apply bg-gray-600 text-white;
+}
+
+[data-theme="dark"] .alert {
+  @apply bg-gray-700 border-gray-600;
+}
+
+[data-theme="dark"] .alert-success {
+  @apply bg-green-900 border-green-700 text-green-100;
+}
+
+[data-theme="dark"] .alert-error {
+  @apply bg-red-900 border-red-700 text-red-100;
+}
+
+[data-theme="dark"] .tab {
+  @apply text-gray-400 hover:text-gray-200;
+}
+
+[data-theme="dark"] .tab.active {
+  @apply text-blue-400 border-blue-500;
+}
+
+[data-theme="dark"] .notification-type,
+[data-theme="dark"] .notification-time,
+[data-theme="dark"] .notification-sender {
+  @apply text-gray-400;
+}
+
+[data-theme="dark"] .notification-title {
+  @apply text-gray-100;
+}
+
+[data-theme="dark"] .notification-message {
+  @apply text-gray-300;
+}
+
+/* Кастомные стили */
+@layer components {
+  .btn-primary {
+    @apply bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-2 rounded-lg font-medium shadow-md hover:shadow-lg hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+  }
+  
+  .btn-secondary {
+    @apply bg-gray-100 text-gray-700 px-4 py-2 rounded-lg font-medium hover:bg-gray-200 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2;
+  }
+  
+  .btn-danger {
+    @apply bg-red-600 text-white px-4 py-2 rounded-lg font-medium shadow-md hover:bg-red-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2;
+  }
+  
+  .btn-warning {
+    @apply bg-amber-500 text-white px-4 py-2 rounded-lg font-medium shadow-md hover:bg-amber-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2;
+  }
+  
+  .btn-success {
+    @apply bg-emerald-600 text-white px-4 py-2 rounded-lg font-medium shadow-md hover:bg-emerald-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2;
+  }
+  
+  .btn-outline {
+    @apply border border-gray-300 text-gray-700 px-3 py-1.5 rounded-lg font-medium hover:bg-gray-50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2;
+  }
+  
+  .btn-sm {
+    @apply px-3 py-1 text-sm;
+  }
+  
+  .input-field {
+    @apply w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white;
+  }
+  
+  .input-label {
+    @apply block text-sm font-medium text-gray-700 mb-1.5;
+  }
+  
+  .card {
+    @apply bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden;
+  }
+  
+  .card-header {
+    @apply px-6 py-4 border-b border-gray-200 bg-gray-50;
+  }
+  
+  .card-body {
+    @apply p-6;
+  }
+  
+  .sidebar-link {
+    @apply flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-white/10 hover:text-white transition-all duration-200;
+  }
+  
+  .sidebar-link.active {
+    @apply bg-white/15 text-white;
+  }
+  
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+  
+  .badge-success {
+    @apply bg-emerald-100 text-emerald-800;
+  }
+  
+  .badge-warning {
+    @apply bg-amber-100 text-amber-800;
+  }
+  
+  .badge-danger {
+    @apply bg-red-100 text-red-800;
+  }
+  
+  .badge-info {
+    @apply bg-blue-100 text-blue-800;
+  }
+  
+  .badge-primary {
+    @apply bg-blue-100 text-blue-800;
+  }
+}
+
+/* Стили для таблицы */
+.table-container {
+  @apply overflow-x-auto rounded-xl border border-gray-200;
+}
+
+.table {
+  @apply min-w-full divide-y divide-gray-200;
+}
+
+.table thead {
+  @apply bg-gray-50;
+}
+
+.table th {
+  @apply px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider;
+}
+
+.table td {
+  @apply px-6 py-4 whitespace-nowrap text-sm text-gray-900;
+}
+
+.table tbody tr {
+  @apply hover:bg-gray-50 transition-colors duration-150;
+}
+
+.table tbody tr:not(:last-child) {
+  @apply border-b border-gray-100;
+}
+
+/* Modal styles */
+.modal-overlay {
+  @apply fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4;
+}
+
+.modal-content {
+  @apply bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto;
+}
+
+.modal-content.modal-large {
+  @apply max-w-5xl;
+}
+
+.modal-header {
+  @apply px-6 py-4 border-b border-gray-200 flex items-center justify-between sticky top-0 bg-white rounded-t-2xl;
+}
+
+.modal-body {
+  @apply p-6;
+}
+
+.modal-footer {
+  @apply px-6 py-4 border-t border-gray-200 flex items-center justify-end gap-3 sticky bottom-0 bg-white rounded-b-2xl;
+}
+
+/* Sidebar */
+.sidebar {
+  @apply fixed left-0 top-0 h-full w-64 bg-gradient-to-b from-slate-900 to-slate-800 text-white z-40;
+}
+
+/* Main content */
+.main-content {
+  @apply min-h-screen w-[calc(100%)];
+}
+
+/* Page header */
+.page-header {
+  @apply flex items-center justify-between mb-6;
+}
+
+.page-title {
+  @apply text-2xl font-bold text-gray-900;
+}
+
+/* Stats cards */
+.stats-card {
+  @apply bg-white rounded-xl p-6 border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200;
+}
+
+.stats-card-label {
+  @apply text-sm font-medium text-gray-500 mb-1;
+}
+
+.stats-card-value {
+  @apply text-3xl font-bold text-gray-900;
+}
+
+/* File upload */
+.file-upload-area {
+  @apply border-2 border-dashed border-gray-300 rounded-xl p-8 text-center cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition-all duration-200;
+}
+
+/* Loading spinner */
+.loading-spinner {
+  @apply flex items-center justify-center min-h-screen;
+}
+
+/* Line clamp utilities */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-4 {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Min height utilities */
+.min-h-10 {
+  min-height: 150px;
+}
+
+.min-h-24 {
+  min-height: 100px;
+}
+
+/* Navbar styles */
+.navbar {
+  @apply fixed top-0 left-0 right-0 h-16 bg-white border-b border-gray-200 z-30 flex items-center justify-between px-6;
+}
+
+.navbar-left {
+  @apply flex items-center gap-4;
+}
+
+.navbar-logo {
+  @apply flex items-center gap-2 text-xl font-bold text-blue-600;
+}
+
+.navbar-right {
+  @apply flex items-center gap-2;
+}
+
+.navbar-btn {
+  @apply p-2 rounded-lg hover:bg-gray-100 transition-colors relative text-gray-600;
+}
+
+.notification-btn {
+  @apply p-2 rounded-lg hover:bg-gray-100 transition-colors relative;
+}
+
+.notification-badge {
+  @apply absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium;
+}
+
+.navbar-profile {
+  @apply flex items-center gap-2 p-2 rounded-lg hover:bg-gray-100 transition-colors;
+}
+
+.navbar-avatar {
+  @apply w-8 h-8 rounded-full object-cover;
+}
+
+.navbar-avatar-placeholder {
+  @apply w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-sm font-semibold;
+}
+
+.navbar-username {
+  @apply text-sm font-medium text-gray-700;
+}
+
+/* Notification panel */
+.notification-panel {
+  @apply absolute right-0 top-full mt-2 w-96 bg-white rounded-xl shadow-2xl border border-gray-200 z-50 overflow-hidden;
+}
+
+.notification-panel-actions {
+  @apply flex items-center gap-1;
+}
+
+.notification-panel-content {
+  @apply max-h-96 overflow-y-auto;
+}
+
+.notification-loading {
+  @apply flex items-center justify-center py-12;
+}
+
+.notification-loading i {
+  @apply text-3xl text-blue-600;
+}
+
+.notification-empty {
+  @apply flex flex-col items-center justify-center py-12 text-gray-400;
+}
+
+.notification-empty i {
+  @apply text-5xl mb-3;
+}
+
+.notification-item {
+  @apply flex items-start gap-3 px-4 py-3 border-b border-gray-100 hover:bg-gray-50 transition-colors cursor-pointer;
+}
+
+.notification-item.unread {
+  @apply bg-blue-50;
+}
+
+.notification-item.unread:hover {
+  @apply bg-blue-100;
+}
+
+.notification-icon {
+  @apply w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0;
+}
+
+.notification-icon i {
+  @apply text-lg;
+}
+
+.notification-body {
+  @apply flex-1 min-w-0;
+}
+
+.notification-header {
+  @apply flex items-center justify-between mb-1;
+}
+
+.notification-type {
+  @apply text-xs font-medium text-gray-500 uppercase;
+}
+
+.notification-time {
+  @apply text-xs text-gray-400;
+}
+
+.notification-title {
+  @apply text-sm font-semibold text-gray-900 mb-0.5;
+}
+
+.notification-message {
+  @apply text-sm text-gray-600 line-clamp-2;
+}
+
+.notification-sender {
+  @apply text-xs text-gray-500 mt-1;
+}
+
+.notification-actions {
+  @apply flex items-center gap-1;
+}
+
+.notification-action-btn {
+  @apply p-1.5 rounded-lg hover:bg-gray-200 transition-colors text-gray-400 hover:text-gray-600;
+}
+
+.notification-panel-header {
+  @apply px-4 py-3 border-b border-gray-200 flex items-center justify-between;
+}
+
+.notification-panel-header h3 {
+  @apply font-semibold text-gray-900;
+}
+
+.notification-panel-actions {
+  @apply flex items-center gap-1;
+}
+
+.notification-icon-btn {
+  @apply p-2 rounded-lg hover:bg-gray-100 transition-colors text-gray-500 hover:text-gray-700;
+}
+
+/* Profile menu */
+.profile-menu {
+  @apply absolute right-0 top-full mt-2 w-56 bg-white rounded-xl shadow-2xl border border-gray-200 z-50 overflow-hidden;
+}
+
+.profile-menu-item {
+  @apply w-full flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors;
+}
+
+.profile-menu-item i {
+  @apply text-lg;
+}
+
+.profile-menu-item.danger {
+  @apply text-red-600;
+}
+
+.profile-menu-item.danger:hover {
+  @apply bg-red-50;
+}
+
+.profile-menu-divider {
+  @apply border-t border-gray-200 my-1;
+}
+
+/* Settings page */
+.settings-page {
+  @apply pt-16;
+}
+
+.tabs {
+  @apply flex gap-2 border-b border-gray-200;
+}
+
+.tab {
+  @apply px-4 py-3 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300 transition-colors flex items-center gap-2;
+}
+
+.tab.active {
+  @apply text-blue-600 border-blue-500;
+}
+
+.avatar-section {
+  @apply flex flex-col items-center;
+}
+
+.avatar-preview {
+  @apply w-24 h-24 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center;
+}
+
+.avatar-preview img {
+  @apply w-full h-full object-cover;
+}
+
+.avatar-placeholder {
+  @apply w-full h-full rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-2xl font-semibold;
+}
+
+.theme-option {
+  @apply cursor-pointer;
+}
+
+.theme-option input {
+  @apply sr-only;
+}
+
+.theme-preview {
+  @apply p-4 rounded-xl border-2 transition-all text-center;
+}
+
+.theme-option input:checked + .theme-preview {
+  @apply ring-2 ring-blue-500 ring-offset-2;
+}
+
+.theme-preview.light {
+  @apply bg-white border-gray-300 text-gray-800;
+}
+
+.theme-preview.dark {
+  @apply bg-gray-800 border-gray-600 text-white;
+}
+
+.checkbox-label {
+  @apply flex items-center gap-3 cursor-pointer;
+}
+
+.checkbox-label input {
+  @apply w-5 h-5 text-blue-600 rounded focus:ring-blue-500;
+}
+
+.alert {
+  @apply px-4 py-3 rounded-xl border;
+}
+
+.alert-success {
+  @apply bg-green-50 border-green-200 text-green-700;
+}
+
+.alert-error {
+  @apply bg-red-50 border-red-200 text-red-700;
+}
+
+/* App container */
+.app-container {
+  @apply min-h-screen;
+}
+
+.main-wrapper {
+  @apply ml-64;
+}
+
+.main-content {
+  @apply pt-16 min-h-screen;
+  width: calc(100%);
+}
+
