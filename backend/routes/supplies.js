@@ -229,31 +229,60 @@ router.delete('/:supplyId/files/:fileId', authMiddleware, checkRole('admin', 'ma
 router.put('/:id', authMiddleware, checkRole('admin', 'manager'), async (req, res) => {
     try {
         const { id } = req.params;
-        const { document_number, supplier, buyer, receiver, supply_date, comment } = req.body;
+        const { document_number, supplier, buyer, receiver, supply_date, comment, items } = req.body;
 
         const [existing] = await db.query('SELECT id FROM supplies WHERE id = ?', [id]);
         if (existing.length === 0) {
             return res.status(404).json({ error: 'Поставка не найдена' });
         }
 
-        const fields = [];
-        const values = [];
+        const connection = await db.getConnection();
+        try {
+            await connection.beginTransaction();
 
-        if (document_number) { fields.push('document_number = ?'); values.push(document_number); }
-        if (supplier) { fields.push('supplier = ?'); values.push(supplier); }
-        if (buyer) { fields.push('buyer = ?'); values.push(buyer); }
-        if (receiver) { fields.push('receiver = ?'); values.push(receiver); }
-        if (supply_date) { fields.push('supply_date = ?'); values.push(supply_date); }
-        if (comment !== undefined) { fields.push('comment = ?'); values.push(comment); }
+            // Обновление основной информации
+            const fields = [];
+            const values = [];
 
-        values.push(id);
+            if (document_number) { fields.push('document_number = ?'); values.push(document_number); }
+            if (supplier) { fields.push('supplier = ?'); values.push(supplier); }
+            if (buyer) { fields.push('buyer = ?'); values.push(buyer); }
+            if (receiver) { fields.push('receiver = ?'); values.push(receiver); }
+            if (supply_date) { fields.push('supply_date = ?'); values.push(supply_date); }
+            if (comment !== undefined) { fields.push('comment = ?'); values.push(comment); }
 
-        await db.query(
-            `UPDATE supplies SET ${fields.join(', ')} WHERE id = ?`,
-            values
-        );
+            if (fields.length > 0) {
+                values.push(id);
+                await connection.query(
+                    `UPDATE supplies SET ${fields.join(', ')} WHERE id = ?`,
+                    values
+                );
+            }
 
-        res.json({ message: 'Поставка обновлена' });
+            // Обновление позиций
+            if (items && Array.isArray(items)) {
+                // Удаление старых позиций
+                await connection.query('DELETE FROM supply_items WHERE supply_id = ?', [id]);
+
+                // Вставка новых позиций
+                for (const item of items) {
+                    if (item.material_id && item.quantity > 0) {
+                        await connection.query(
+                            'INSERT INTO supply_items (supply_id, material_id, quantity, price) VALUES (?, ?, ?, ?)',
+                            [id, item.material_id, item.quantity, item.price || 0]
+                        );
+                    }
+                }
+            }
+
+            await connection.commit();
+            res.json({ message: 'Поставка обновлена' });
+        } catch (error) {
+            await connection.rollback();
+            throw error;
+        } finally {
+            connection.release();
+        }
     } catch (error) {
         console.error('Ошибка обновления поставки:', error);
         res.status(500).json({ error: 'Ошибка обновления поставки' });

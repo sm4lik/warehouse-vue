@@ -1,8 +1,15 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { suppliesAPI } from '../api';
 
 const SupplyViewModal = ({ show, onClose, supply }) => {
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (show && supply) {
+      console.log('Supply data:', supply);
+      console.log('Supply items:', supply.items);
+    }
+  }, [show, supply]);
 
   if (!show || !supply) return null;
 
@@ -138,10 +145,10 @@ const SupplyViewModal = ({ show, onClose, supply }) => {
                           <span className="text-gray-500 text-sm ml-1">{item.unit_short}</span>
                         </td>
                         <td className="text-right text-gray-700">
-                          {item.price > 0 ? `${item.price.toFixed(2)} ₽` : '-'}
+                          {parseFloat(item.price) > 0 ? `${parseFloat(item.price).toFixed(2)} ₽` : '-'}
                         </td>
                         <td className="text-right font-semibold text-gray-900">
-                          {item.price > 0 ? `${(item.quantity * item.price).toFixed(2)} ₽` : '-'}
+                          {parseFloat(item.price) > 0 ? `${(parseFloat(item.quantity) * parseFloat(item.price)).toFixed(2)} ₽` : '-'}
                         </td>
                       </tr>
                     ))}
@@ -150,7 +157,7 @@ const SupplyViewModal = ({ show, onClose, supply }) => {
                     <tr className="bg-gray-50">
                       <td colSpan={4} className="text-right font-semibold text-gray-700">Итого:</td>
                       <td className="text-right font-bold text-blue-600 text-lg">
-                        {supply.items.reduce((sum, item) => sum + (item.quantity * (item.price || 0)), 0).toFixed(2)} ₽
+                        {supply.items.reduce((sum, item) => sum + (parseFloat(item.quantity) * (parseFloat(item.price) || 0)), 0).toFixed(2)} ₽
                       </td>
                     </tr>
                   </tfoot>

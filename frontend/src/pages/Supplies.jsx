@@ -34,9 +34,15 @@ const Supplies = () => {
     setShowModal(true);
   };
 
-  const handleEdit = (supply) => {
-    setSelectedSupply(supply);
-    setShowModal(true);
+  const handleEdit = async (supply) => {
+    try {
+      // Загружаем полную информацию о поставке с позициями
+      const response = await suppliesAPI.getById(supply.id);
+      setSelectedSupply(response.data.supply);
+      setShowModal(true);
+    } catch (error) {
+      alert('Ошибка загрузки: ' + (error.response?.data?.error || error.message));
+    }
   };
 
   const handleView = async (supply) => {

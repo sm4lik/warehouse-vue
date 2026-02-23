@@ -22,6 +22,13 @@ const SupplyModal = ({ show, onClose, supply }) => {
     if (show) {
       loadMaterials();
       if (supply) {
+        // Преобразуем items в правильный формат
+        const formattedItems = (supply.items || []).map(item => ({
+          material_id: parseInt(item.material_id),
+          quantity: parseFloat(item.quantity) || 0,
+          price: parseFloat(item.price) || 0
+        }));
+        
         setFormData({
           document_number: supply.document_number || '',
           supplier: supply.supplier || '',
@@ -29,7 +36,7 @@ const SupplyModal = ({ show, onClose, supply }) => {
           receiver: supply.receiver || '',
           supply_date: supply.supply_date?.split('T')[0] || new Date().toISOString().split('T')[0],
           comment: supply.comment || '',
-          items: supply.items || []
+          items: formattedItems
         });
         setExistingFiles(supply.files || []);
       } else {
@@ -75,7 +82,13 @@ const SupplyModal = ({ show, onClose, supply }) => {
 
   const handleItemChange = (index, field, value) => {
     const newItems = [...formData.items];
-    newItems[index][field] = field === 'material_id' ? parseInt(value) : parseFloat(value) || 0;
+    if (field === 'material_id') {
+      newItems[index][field] = parseInt(value) || 0;
+    } else if (field === 'quantity' || field === 'price') {
+      newItems[index][field] = parseFloat(value) || 0;
+    } else {
+      newItems[index][field] = value;
+    }
     setFormData(prev => ({ ...prev, items: newItems }));
   };
 
@@ -253,7 +266,7 @@ const SupplyModal = ({ show, onClose, supply }) => {
                 ) : (
                   <div className="space-y-3">
                     {formData.items.map((item, index) => (
-                      <div key={index} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                      <div key={item.id || `item-${index}`} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
                         <div className="flex-1">
                           <select
                             className="input-field text-sm py-2"
